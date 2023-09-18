@@ -81,8 +81,8 @@ def resize_images(file_path = 'files_created.txt', output_file = 'files_created_
             if any(file.endswith(ext) for ext in allowed_extensions):
 
                 # Build the destination file paths
-                destination_file_path = file.replace('files','files_resized')
-                destination_file_path = add_resized_after_first_sequence(destination_file_path)
+                destination_file_path = file.replace('_','r',1).replace('files','files_resized')
+                #destination_file_path = add_resized_after_first_sequence(destination_file_path)
 
                 # Create the destination directory structure if it doesn't exist
                 os.makedirs(os.path.dirname(destination_file_path), exist_ok=True)
@@ -174,8 +174,9 @@ def resize_images(file_path = 'files_created.txt', output_file = 'files_created_
                     # Load and process the YAML file
                     with open(file, 'r') as yaml_file:
                         yaml_data = yaml.safe_load(yaml_file)
-                        #yaml_data['X'] = yaml_data['X'].replace('files','files_resized')
-                        #yaml_data['Yc'] = yaml_data['Yc'].replace('files','files_resized')
+                        yaml_data['X'] = yaml_data['X'].replace('_','r',1)#.replace('files','files_resized')
+                        yaml_data['Y'] = "NA"
+                        yaml_data['Yc'] = yaml_data['Yc'].replace('_','r',1)#.replace('files','files_resized')
 
                     # Perform YAML data manipulation here if needed
 
