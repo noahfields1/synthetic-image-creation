@@ -10,7 +10,7 @@ import matplotlib
 import PIL
 
 """
-#Given a list of files, 'files.txt' we will zip the filtered files
+#Given a list of files, 'files_created.txt' we will zip the filtered files
 #into a zip file ready to be exported to a GPU.
 """
 def create_zip_with_selected_files(file_path = "files_created.txt", zip_file_name = "files_tidy.zip"):
@@ -39,9 +39,8 @@ def create_zip_with_selected_files(file_path = "files_created.txt", zip_file_nam
         for pathway in pathways_list_Yc_npy:
             zipf.write(pathway, os.path.relpath(pathway, 'files'))
             
-def filter(csv_pathway='created_attributes.csv'):
+def filter(csv_pathway='created_attributes.csv',output_file = "files_created.txt"):
     df = pd.read_csv(csv_pathway)
-    output_file = "files_created.txt"
     arr = []
     for index, row in df.iterrows():
         if row['gradient'] == None or row['std_dev'] == None:
