@@ -3,11 +3,19 @@ import glob
 import numpy as np
 import matplotlib.pyplot as plt
 
-def extract_perimeter(root_dir = "./files"):
+def extract_perimeter(root_dir = "./files",replace = True):
     # Get all file paths ending in Yc.npy recursively in directory './files'
-    y_file_paths = glob.glob(os.path.join(root_dir, '**', '*Yc.npy'), recursive=True)
+    yc_file_paths = glob.glob(os.path.join(root_dir, '**', '*Yc.npy'), recursive=True)
 
-    for y_file_path in y_file_paths:
+    if replace == False:
+        #In case Yp files already exist at some locations, we don't need to make new ones
+        yp_file_paths = glob.glob(os.path.join(root_dir, '**', '*Yp.npy'), recursive=True)
+        yp_file_paths = [pathway.replace('Yp.npy','Yc.npy') for pathway in yc_file_paths]
+
+        yc_file_paths = set(yc_file_paths) - set(yp_file_paths)
+        print("There are " + str(len(yc_file_paths)) + " *Yp.npy files to make.")
+
+    for y_file_path in yc_file_paths:
         # Load the Y.npy file
         y_arr = np.load(y_file_path)
 
